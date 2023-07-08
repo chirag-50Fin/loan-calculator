@@ -39,7 +39,7 @@ $(function () {
           canvasImageHeight
         );
       }
-      pdf.save("sample-invoice.pdf");
+      pdf.save("50fin-report.pdf");
     });
   });
 });
