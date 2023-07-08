@@ -1,0 +1,368 @@
+body {
+  background-color: #0b0d22;
+  font-family: "Inter", sans-serif;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  min-height: 100vh;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+.loan-image {
+  width: 50%;
+  max-width: 250px;
+  height: auto;
+  margin: 3rem auto 2rem auto;
+}
+
+.card-title {
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.table-container {
+  width: 95%;
+  background-color: #111535;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80vw;
+  margin: 0 auto;
+}
+
+th {
+  text-align: right;
+  color: white;
+  padding: 2rem 0;
+}
+
+td {
+  padding: 8px 0px;
+  color: white;
+  text-align: right;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+input {
+  padding: 12px 5px 12px 12px;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #171c48;
+  border: 2px solid #8c8f9f;
+  border-radius: 5px;
+  color: #45fef1;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  display: none;
+}
+
+input[type="number"] {
+  max-width: 10rem;
+  color: white;
+  width: auto;
+  -moz-appearance: textfield;
+}
+
+.form-control:focus {
+  color: #ffffff;
+}
+
+.fa {
+  cursor: pointer;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  border: none;
+  padding: 10px;
+}
+
+.table th {
+  color: #fff;
+  border: none !important ;
+}
+
+.form-control,
+.select2-container .select2-selection {
+  width: 100%;
+  background-color: #171c48 !important;
+  border: 2px solid #828dff !important;
+  height: 40px;
+  max-width: 100%;
+}
+
+.select2-selection:focus-visible {
+  display: none;
+}
+
+.select2-container {
+  width: inherit !important;
+}
+
+.select2-selection__rendered {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  display: inline-block !important;
+  margin-top: 0.25rem;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+  overflow: hidden;
+}
+
+.select2-container--default .select2-results__option[aria-selected="true"] {
+  background-color: unset;
+}
+
+.select2-container--default
+  .select2-results__option--highlighted[aria-selected] {
+  background-color: #24feee;
+  color: #000000;
+}
+
+.fa {
+  cursor: pointer;
+}
+
+.form-control {
+  color: #ffffff;
+}
+
+.select2-dropdown {
+  background-color: #171c48;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  max-width: 800px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 40px;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  width: 40px;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow
+  b {
+  border: 1px solid #24feee;
+  border-width: 2px 2px 0 0;
+  content: "";
+  display: inline-block;
+  height: 10px;
+  left: 40%;
+  position: relative;
+  top: 46%;
+  transform: rotate(135deg) translateY(100%);
+  vertical-align: top;
+  width: 10px;
+  margin: 0 !important;
+}
+
+.select2-container--default.select2-container--open
+  .select2-selection--single
+  .select2-selection__arrow
+  b {
+  transform: rotate(-45deg) translateY(0%);
+  border: 1px solid #24feee;
+  border-width: 2px 2px 0 0;
+  content: "";
+  display: inline-block;
+  height: 10px;
+  left: 26%;
+  position: relative;
+  top: 42%;
+  vertical-align: top;
+  width: 10px;
+  margin: 0 !important;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+  border-top: unset;
+  padding: 8px 8px 8px 0;
+}
+
+.table > tbody > tr > td:nth-child(2) {
+  padding: 12px 0 8px 0;
+}
+
+.table th {
+  font-size: 18px;
+  padding: 0 !important;
+}
+
+.table tr,
+td {
+  padding: 12px 5px 12px 0;
+}
+
+.table > tbody > tr > td {
+  padding-top: 12px;
+}
+
+.table tr td:first-child {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table tr {
+  margin: 2rem 0;
+}
+
+.table > thead > tr > th {
+  border-bottom: 1px solid #ddd;
+}
+
+.add-icon-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.add-icon {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.remove-icon {
+  margin-top: 0.3rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.max-loan-card {
+  background-color: transparent;
+  border: 2px solid #828dff;
+  border-radius: 10px;
+  color: #828dff;
+  padding: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  font-size: 22px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.max-loan-card span:first-child {
+  color: white;
+}
+
+.submit-btn {
+  background-color: transparent;
+  border: 1px solid #24feee;
+  color: #24feee;
+  border-radius: 50px;
+  padding: 8px 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 0.5rem;
+}
+
+.download-btn {
+  background-color: transparent;
+  border: 1px solid #24feee;
+  color: #24feee;
+  border-radius: 50px;
+  padding: 8px 30px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0 0.5rem;
+}
+
+@media (max-width: 400px) {
+  .table-container {
+    padding: 2rem 1rem;
+  }
+  .card-title {
+    font-size: 1.5rem;
+  }
+  .table th {
+    font-size: 14px;
+  }
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
+    width: 200px;
+  }
+  input[type="number"] {
+    max-width: 5rem;
+  }
+  .action-cell {
+    display: flex;
+    padding-left: 8px !important;
+  }
+  .max-loan-card {
+    padding: 1rem;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 381px) and (max-width: 900px) {
+  .select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
+    width: 200px;
+  }
+  input[type="number"] {
+    max-width: 7rem;
+  }
+}

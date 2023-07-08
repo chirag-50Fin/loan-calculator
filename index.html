@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Loan Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link href="./style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <h1 class="card-title">Check Loan Eligibility</h1>
+    <img src="loan.svg" class="loan-image" alt="loan" />
+    <div class="table-container">
+      <table class="table">
+        <thead id="thead">
+          <tr>
+            <th>Fund Name (ISIN)</th>
+            <th>Quantity</th>
+            <th style="visibility: hidden">Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td>
+              <select class="scrip-select form-control" style="width: 100%">
+                <option></option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control"
+                min="0"
+                step="0.01"
+                style="appearance: none; text-align: right"
+              />
+            </td>
+            <td class="text-right action-cell"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="add-icon-container">
+        <img src="add.svg" class="add-icon" alt="Add icon" />
+      </div>
+
+      <div class="max-loan-card" style="display: none">
+        <span>Maximum Loan Amount</span>
+        <span id="maxLoan"></span>
+      </div>
+
+      <p id="errorMessage" style="color: #fe2434"></p>
+      <div class="d-flex justify-content-center">
+        <button id="submitButton" class="submit-btn">Submit</button>
+        <button class="download-btn d-none">View Report</button>
+      </div>
+      <p class="text-center mt-5 mb-2">Powered By</p>
+      <img src="./logo.svg" height="50" width="auto" />
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
+
+    <script type="application/javascript">
+      var maxLoan = $("#maxLoan");
+      var scripJson = [];
+      var apiResponse = {};
+
+      $(document).ready(function () {
+        $.getJSON("scrip.json", function (data) {
+          var scripData = data;
+          $.each(scripData, function (key, scrip) {
+            var item = {
+              name: scrip.name + " (" + scrip.isin + ")",
+              isin: scrip.isin,
+            };
+            scripJson.push(item);
+          });
+
+          initializeSelect2($(".scrip-select"));
+        });
+      });
+
+      function initializeSelect2(selectElement) {
+        $.each(scripJson, function (key, scrip) {
+          selectElement.append(new Option(scrip.name, scrip.isin));
+        });
+
+        selectElement
+          .select2({
+            placeholder: "Search fund name or ISIN",
+            dropdownAutoWidth: false,
+            width: "100%",
+          })
+          .on("select2:opening", function () {
+            $(".select2-results__options").addClass("max-width-option");
+            setTimeout(function () {
+              $(".select2-search__field")[0].focus();
+            }, 10);
+          })
+          .on("select2:close", function () {
+            $(".select2-results__options").removeClass("max-width-option");
+          });
+      }
+
+      $(document).on("click", ".add-icon", function () {
+        var newRow = $(
+          '<tr><td><select class="scrip-select form-control" style="width: 100%"><option></option></select></td><td><input type="number" class="form-control" min="0" step="0.01" style="appearance: none; text-align: right" /></td><td class="text-right action-cell"><img src="remove.svg" class="remove-icon" alt="Remove icon"/></td></tr>'
+        );
+        $("#tableBody").append(newRow);
+        initializeSelect2(newRow.find("select"));
+      });
+
+      $(document).on("click", ".remove-icon", function () {
+        $(this).closest("tr").remove();
+      });
+
+      $(document).on("click", "#submitButton", function () {
+        var output = {};
+        output.isin_quantity = {};
+        var error = false;
+        var errorMsg = "";
+
+        $("#errorMessage").text("");
+
+        $("#tableBody")
+          .find("tr")
+          .each(function () {
+            var $row = $(this);
+
+            var isin = $row.find("select").val();
+            var quantityStr = $row.find("input").val();
+            var quantity = parseFloat(quantityStr);
+            var apiResponse = {};
+
+            if (!isin && !quantityStr) {
+              errorMsg = "Scrip not selected and quantity not entered.";
+              error = true;
+            } else if (!isin) {
+              errorMsg = "Please select all the scrips";
+              error = true;
+            } else if (!quantityStr) {
+              errorMsg = "Enter a valid quantity for all scrips";
+              error = true;
+            } else if (isNaN(quantity) || quantity <= 0) {
+              errorMsg = "Enter a valid quantity for all scrips";
+              error = true;
+            } else {
+              if (output.isin_quantity[isin]) {
+                output.isin_quantity[isin] += quantity;
+              } else {
+                output.isin_quantity[isin] = quantity;
+              }
+            }
+          });
+
+        if (error) {
+          $("#errorMessage").text(errorMsg);
+        } else {
+          $(".max-loan-card").css("display", "flex");
+          $.ajax({
+            url: "https://fifty-fin-external-n77ca4jn5a-el.a.run.app/api/v1/generate_configuration/",
+            type: "POST",
+            data: JSON.stringify(output),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+              apiResponse = response.data;
+              var totalMaxLoanAmount = 0;
+              $.each(response.data.Approved_ISIN, function (isin, details) {
+                totalMaxLoanAmount += details.max_loan_amount;
+              });
+
+              maxLoan.text(formatCurrency(totalMaxLoanAmount));
+              $("#tableBody tr").each(function () {
+                $(this).find("td:last-child").remove();
+              });
+              $(".add-icon-container").remove();
+              $(".remove-icon").remove();
+              $(".submit-btn").addClass("d-none");
+              $(".download-btn").removeClass("d-none");
+
+              confetti({
+                particleCount: 100,
+                spread: 100,
+                origin: { y: 0.6 },
+              });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              $("#errorMessage").text(
+                "Request failed: " + textStatus + ", " + errorThrown
+              );
+            },
+          });
+        }
+      });
+
+      function formatCurrency(amount) {
+        return new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(amount);
+      }
+    </script>
+
+    <script>
+      $(document).on("click", ".download-btn", function () {
+        $(".download-btn").addClass("d-none");
+        var data = [];
+        var totalMaxLoanAmount = 0;
+
+        for (var key in apiResponse.Approved_ISIN) {
+          var item = apiResponse.Approved_ISIN[key];
+          item.price = item.price.toFixed(2);
+          item.quantity = item.quantity.toFixed(2);
+          item.loan_to_value_ratio = item.loan_to_value_ratio.toFixed(2);
+          item.max_loan_amount = item.max_loan_amount.toFixed(2);
+          data.push(item);
+          totalMaxLoanAmount += parseFloat(item.max_loan_amount);
+        }
+
+        totalMaxLoanAmount = totalMaxLoanAmount.toFixed(2);
+
+        localStorage.setItem("totalMaxLoanAmount", totalMaxLoanAmount);
+        localStorage.setItem("data", JSON.stringify(data));
+
+        window.open("./report/report.html", "_blank");
+      });
+    </script>
+  </body>
+</html>
