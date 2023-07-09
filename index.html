@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Loan Calculator</title>
+    <link rel="icon" type="image/png" href="./favicon.svg" />
+    <title>50Fin Loan Eligibility Calculator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
@@ -49,6 +50,10 @@
 
       <div class="add-icon-container">
         <img src="add.svg" class="add-icon" alt="Add icon" />
+      </div>
+
+      <div class="loader" style="display: none">
+        <img src="loader.gif" alt="Loading..." />
       </div>
 
       <div class="max-loan-card" style="display: none">
@@ -124,6 +129,9 @@
       });
 
       $(document).on("click", "#submitButton", function () {
+        $(".loader").css("display", "block");
+        $(".add-icon").css("display", "none");
+        $(".remove-icon").css("display", "none");
         var output = {};
         output.isin_quantity = {};
         var error = false;
@@ -165,7 +173,6 @@
         if (error) {
           $("#errorMessage").text(errorMsg);
         } else {
-          $(".max-loan-card").css("display", "flex");
           $.ajax({
             url: "https://fifty-fin-external-n77ca4jn5a-el.a.run.app/api/v1/generate_configuration/",
             type: "POST",
@@ -178,6 +185,18 @@
               $.each(response.data.Approved_ISIN, function (isin, details) {
                 totalMaxLoanAmount += details.max_loan_amount;
               });
+
+              if (totalMaxLoanAmount < 25000) {
+                $("#errorMessage").text(
+                  "Please add more scrips. Minimum loan amount must be at least ₹25,000"
+                );
+                $(".add-icon").css("display", "block");
+                $(".remove-icon").css("display", "block");
+                $(".loader").css("display", "none");
+                return;
+              }
+
+              $(".max-loan-card").css("display", "flex");
 
               maxLoan.text(formatCurrency(totalMaxLoanAmount));
               $("#tableBody tr").each(function () {
@@ -193,8 +212,11 @@
                 spread: 100,
                 origin: { y: 0.6 },
               });
+
+              $(".loader").css("display", "none");
             },
             error: function (jqXHR, textStatus, errorThrown) {
+              $(".loader").css("display", "none");
               $("#errorMessage").text(
                 "Request failed: " + textStatus + ", " + errorThrown
               );
@@ -215,7 +237,6 @@
 
     <script>
       $(document).on("click", ".download-btn", function () {
-        $(".download-btn").addClass("d-none");
         var data = [];
         var totalMaxLoanAmount = 0;
 

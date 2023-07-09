@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html>
   <head>
-    <title>50Fin Loan Report</title>
+    <link rel="icon" type="image/png" href="../favicon.svg" />
+    <title>50Fin Loan Eligibility Report</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1024" />
     <link
@@ -21,10 +22,18 @@
     <link type="text/css" rel="stylesheet" href="report.css" />
   </head>
   <body>
-    <div id="totalMaxLoanAmount"></div>
-    <div id="data"></div>
+  </div>
     <div class="invoice-2 invoice-content">
       <div class="container">
+        <div class="invoice-btn-section clearfix d-print-none">
+          <a
+            href="javascript:window.print()"
+            class="btn btn-lg btn-print"
+            style="color: #000000"
+          >
+            <i class="fa fa-download"></i> Print / Download Report
+          </a>
+        </div>
         <div class="row">
           <div class="col-lg-12">
             <div class="invoice-inner clearfix">
@@ -34,20 +43,16 @@
                     <div class="col-sm-6">
                       <div class="invoice-logo">
                         <div class="logo">
-                          <img src="" alt="logo" />
+                          <img src="./logo.png" alt="logo" />
                         </div>
-                        <!-- logo ended -->
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="invoice-id">
                         <div class="info">
-                          <h1 class="inv-header-1">Invoice</h1>
-                          <p class="mb-1">
-                            Invoice Number: <span>#45613</span>
-                          </p>
+                          <h1 class="inv-header-1">LOAN ELIGIBILITY REPORT</h1>
                           <p class="mb-0">
-                            Invoice Date: <span>24 Jan 2022</span>
+                            Report Date: <span class="report-date"></span>
                           </p>
                         </div>
                       </div>
@@ -58,24 +63,29 @@
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="invoice-number mb-30">
-                        <h4 class="inv-title-1">Invoice To</h4>
-                        <h2 class="name">Jhon Smith</h2>
+                        <h4 class="inv-title-1">Report By</h4>
+                        <h2 class="name">50Fin</h2>
                         <p class="invo-addr-1">
-                          Theme Vessel <br />
-                          info@themevessel.com <br />
-                          21-12 Green Street, Meherpur, Bangladesh <br />
+                          4th Floor, MSR Garuda Building,<br />
+                          Inside MS Ramaiah Campus, <br />
+                          Mathikere, Bengaluru, <br />
+                          Karnataka - 560054
                         </p>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="invoice-number mb-30">
                         <div class="invoice-number-inner">
-                          <h4 class="inv-title-1">Invoice From</h4>
-                          <h2 class="name">Animas Roky</h2>
-                          <p class="invo-addr-1">
-                            Apexo Inc <br />
-                            billing@apexo.com <br />
-                            169 Teroghoria, Bangladesh <br />
+                          <h4 class="inv-title-1">For any Assistance</h4>
+                          <h2 class="name">CONATCT DETAILS</h2>
+                          <p class="invo-addr-1" style="text-align: end;">
+                            Monday - Saturday<br />
+                            9.00 AM - 6.00 PM<br />
+                            <a href="mailto:support@50fin.in"
+                              >support@50fin.in</a
+                            >
+                            <br />
+                            <a href="tel:+91960645610">+91 96064 5610</a><br />
                           </p>
                         </div>
                       </div>
@@ -87,108 +97,38 @@
                     <table class="table mb-0 table-striped invoice-table">
                       <thead class="bg-active">
                         <tr class="tr">
-                          <th class="pl0 text-start">ISIN</th>
-                          <th class="text-center">Name</th>
+                          <th class="text-center">ISIN</th>
+                          <th class="text-center">Fund Name</th>
                           <th class="text-center">Type</th>
-                          <th class="text-center">Sub Type</th>
-                          <th class="text-center">Quantity</th>
-                          <th class="text-center">Price</th>
-                          <th class="text-center">LTV Ratio</th>
-                          <th class="text-end">Max Loan Amount</th>
+                          <th style="text-align: end">Quantity</th>
+                          <th style="text-align: end">Price</th>
+                          <th style="text-align: end">LTV</th>
+                          <th style="text-align: end">Max Loan Amount</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr class="tr">
-                          <td>
-                            <div class="item-desc-1">
-                              <span>01</span>
-                            </div>
-                          </td>
-                          <td class="pl0">Businesscard Design</td>
-                          <td class="text-center">$300</td>
-                          <td class="text-center">2</td>
-                          <td class="text-end">$600.00</td>
-                        </tr>
-                        <tr class="bg-grea">
-                          <td>
-                            <div class="item-desc-1">
-                              <span>02</span>
-                            </div>
-                          </td>
-                          <td class="pl0">Fruit Flayer Design</td>
-                          <td class="text-center">$400</td>
-                          <td class="text-center">1</td>
-                          <td class="text-end">$60.00</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="item-desc-1">
-                              <span>03</span>
-                            </div>
-                          </td>
-                          <td class="pl0">Application Interface Design</td>
-                          <td class="text-center">$240</td>
-                          <td class="text-center">3</td>
-                          <td class="text-end">$640.00</td>
-                        </tr>
-
-                        <tr>
-                          <td>
-                            <div class="item-desc-1">
-                              <span>04</span>
-                            </div>
-                          </td>
-                          <td class="pl0">Theme Development</td>
-                          <td class="text-center">$720</td>
-                          <td class="text-center">4</td>
-                          <td class="text-end">$640.00</td>
-                        </tr>
-                        <tr class="tr2">
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td class="text-center">SubTotal</td>
-                          <td class="text-end">$710.99</td>
-                        </tr>
-                        <tr class="tr2">
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td class="text-center">Tax</td>
-                          <td class="text-end">$85.99</td>
-                        </tr>
-                        <tr class="tr2">
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td class="text-center f-w-600 active-color">
-                            Grand Total
-                          </td>
-                          <td class="f-w-600 text-end active-color">$795.99</td>
-                        </tr>
-                      </tbody>
+                      <tbody></tbody>
                     </table>
+                    <div class="repayment-container">
+                      <h5 class="text-center" style="margin: 3rem 0 1rem 0; font-weight: 600; text-transform: uppercase;">Loan Repayment Timeline <span class="today-date" style="text-transform: none;"></span></h2>
+                    </div>
                   </div>
+                </div>
+                <div class="download-app">
+                  <a href="https://play.google.com/store/apps/details?id=com.fiftyfin.app" target="_blank">
+                    <img src="../play-store.png" height="60">
+                  </a>
+                  <a href="https://apps.apple.com/in/app/50fin/id1669039122" target="_blank">
+                    <img src="../app-store.png" height="60">
+                  </a>
                 </div>
                 <div class="invoice-bottom">
                   <div class="row">
-                    <div class="col-lg-6 col-md-5 col-sm-5">
-                      <div class="payment-method mb-30">
-                        <h3 class="inv-title-1">Payment Method</h3>
-                        <ul class="payment-method-list-1 text-14">
-                          <li><strong>Account No:</strong> 00 123 647 840</li>
-                          <li><strong>Account Name:</strong> Jhon Doe</li>
-                          <li><strong>Branch Name:</strong> xyz</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-lg-6 col-md-7 col-sm-7">
+                    <div class="col-lg-12">
                       <div class="terms-conditions mb-30">
-                        <h3 class="inv-title-1">Terms & Conditions</h3>
-                        <p>
-                          Lorem Ipsum is simply dummy text of the printing and
-                          typesetting industry. Lorem Ipsum has been the
-                          industry's standard dummy has
+                        <p class="text-center">
+                          For more details, please visit us at
+                          <a href="www.50fin.in" target="_blank">www.50fin.in</a
+                          >.
                         </p>
                       </div>
                     </div>
@@ -198,39 +138,20 @@
                   <div class="row g-0">
                     <div class="col-sm-12">
                       <div class="contact-info clearfix">
-                        <a href="tel:+55-4XX-634-7071" class="d-flex"
-                          ><i class="fa fa-phone"></i> +00 123 647 840</a
+                        <a href="#" class="d-flex"
+                          ><i class="fa fa-ban"></i>NO CIBIL CHECK</a
                         >
-                        <a href="tel:info@themevessel.com" class="d-flex"
-                          ><i class="fa fa-envelope"></i>
-                          info@themevessel.com</a
+                        <a href="#" class="d-flex"
+                          ><i class="fa fa-clock"></i>2 HOUR DISBURSAL</a
                         >
-                        <a
-                          href="tel:info@themevessel.com"
-                          class="mr-0 d-flex d-none-580"
-                          ><i class="fa fa-map-marker"></i> 169 Teroghoria,
-                          Bangladesh</a
+                        <a href="#" class="mr-0 d-flex d-none-580"
+                          ><i class="fa fa-ban"></i>ZERO PRE-CLOSURE CHARGES</a
                         >
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="invoice-btn-section clearfix d-print-none">
-                <a
-                  href="javascript:window.print()"
-                  class="btn btn-lg btn-print"
-                >
-                  <i class="fa fa-print"></i> Print Invoice
-                </a>
-                <a
-                  id="invoice_download_btn"
-                  class="btn btn-lg btn-download btn-theme"
-                >
-                  <i class="fa fa-download"></i> Download Invoice
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -239,36 +160,217 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="jspdf.min.js"></script>
     <script src="html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.71/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.71/vfs_fonts.js"></script>
     <script src="report.js"></script>
 
     <script>
-      // Retrieve the data from local storage
       var totalMaxLoanAmount = localStorage.getItem("totalMaxLoanAmount");
       var data = JSON.parse(localStorage.getItem("data"));
+      var interestRate = 0.12;
 
-      // Display the total max loan amount
-      document.getElementById("totalMaxLoanAmount").textContent =
-        "Total Max Loan Amount: " + totalMaxLoanAmount;
+      function getFormattedNumber(amount) {
+        return new Intl.NumberFormat("en-IN", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(amount);
+      }
 
-      // Display the data
-      var dataContainer = document.getElementById("data");
+      function getFormattedAmount(amount) {
+        return (
+          "₹" +
+          new Intl.NumberFormat("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }).format(amount)
+        );
+      }
+
+      function getFormattedDate() {
+        const currentDate = new Date();
+        const day = currentDate.getDate();
+        const month = currentDate.getMonth() + 1;
+        const year = currentDate.getFullYear();
+
+        const formattedDay = day < 10 ? `0${day}` : day;
+        const formattedMonth = month < 10 ? `0${month}` : month;
+
+        const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+        return formattedDate;
+      }
+
+      const todayDate = getFormattedDate();
+      document.querySelector(".report-date").textContent = todayDate;
+      document.querySelector(".today-date").textContent = '(Based on ' + todayDate + ')';
+      var tableBody = document.querySelector(".invoice-table tbody");
+
       data.forEach(function (item) {
-        var itemDiv = document.createElement("div");
-        itemDiv.textContent =
-          "Price: " +
-          item.price +
-          " | Quantity: " +
-          item.quantity +
-          " | Loan-to-Value Ratio: " +
-          item.loan_to_value_ratio +
-          " | Max Loan Amount: " +
-          item.max_loan_amount;
-        dataContainer.appendChild(itemDiv);
+        var row = document.createElement("tr");
+
+        var isinCell = document.createElement("td");
+        isinCell.className = "text-center";
+        isinCell.textContent = item.isin;
+        row.appendChild(isinCell);
+
+        var nameCell = document.createElement("td");
+        nameCell.className = "text-center";
+        nameCell.textContent = item.name;
+        row.appendChild(nameCell);
+
+        var subTypeCell = document.createElement("td");
+        subTypeCell.className = "text-center";
+        subTypeCell.textContent = item.scrip_sub_type;
+        row.appendChild(subTypeCell);
+
+        var quantityCell = document.createElement("td");
+        quantityCell.style.textAlign = "end";
+        quantityCell.textContent = getFormattedNumber(item.quantity);
+        row.appendChild(quantityCell);
+
+        var priceCell = document.createElement("td");
+        priceCell.style.textAlign = "end";
+        priceCell.textContent = getFormattedAmount(item.price);
+        row.appendChild(priceCell);
+
+        var ltvRatioCell = document.createElement("td");
+        ltvRatioCell.style.textAlign = "end";
+        ltvRatioCell.textContent = item.loan_to_value_ratio;
+        row.appendChild(ltvRatioCell);
+
+        var maxLoanAmountCell = document.createElement("td");
+        maxLoanAmountCell.style.textAlign = "end";
+        maxLoanAmountCell.textContent = getFormattedAmount(
+          item.max_loan_amount
+        );
+        row.appendChild(maxLoanAmountCell);
+
+        tableBody.appendChild(row);
       });
 
-      // Clear the data from local storage (optional)
-      localStorage.removeItem("totalMaxLoanAmount");
-      localStorage.removeItem("data");
+      var lastRow = document.createElement("tr");
+      lastRow.classList.add("tr2");
+
+      for (var i = 0; i < 3; i++) {
+        var emptyCell = document.createElement("td");
+        lastRow.appendChild(emptyCell);
+      }
+      var totalLoanAmountCell = document.createElement("td");
+      totalLoanAmountCell.className = "last-row active-color";
+      totalLoanAmountCell.colSpan = "3";
+      totalLoanAmountCell.textContent = "Total Loan Amount";
+      lastRow.appendChild(totalLoanAmountCell);
+
+      var loanAmountValueCell = document.createElement("td");
+      loanAmountValueCell.className = "last-row-value active-color";
+      loanAmountValueCell.textContent = getFormattedAmount(totalMaxLoanAmount);
+      lastRow.appendChild(loanAmountValueCell);
+
+      var tableBody = document.querySelector(".invoice-table tbody");
+      tableBody.appendChild(lastRow);
+
+      // loan repayment timeline
+      function computeRepaymentTimeline(loanAmount, interestRate, startDate) {
+        let today = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
+        let currentDay = today.getUTCDate();
+        let currentMonth = today.getUTCMonth() + 1;
+        let currentYear = today.getUTCFullYear();
+        let dailyInterestRate = interestRate / 365;
+        let firstPaymentMonth;
+        let firstPaymentYear;
+        if (currentDay <= 10) {
+            firstPaymentMonth = currentMonth + 1;
+            firstPaymentYear = currentYear;
+        } else {
+            firstPaymentMonth = currentMonth + 2;
+            firstPaymentYear = currentYear;
+        }
+        if (firstPaymentMonth > 12) {
+            firstPaymentMonth -= 12;
+            firstPaymentYear += 1;
+        }
+        let repayments = {};
+        for (let i = 0; i < 12; i++) {
+            let paymentDate = new Date(Date.UTC(firstPaymentYear, firstPaymentMonth - 1, 7));
+            if (i < 11) {
+                let interestEndDate, interestDays;
+                if (i == 0) {
+                    interestEndDate = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 0));
+                    interestDays = Math.ceil((interestEndDate - today) / (1000 * 60 * 60 * 24)) + 1;
+                } else {
+                    interestDays = Math.ceil((paymentDate - today) / (1000 * 60 * 60 * 24));
+                }
+                let interestAmount = loanAmount * dailyInterestRate * interestDays;
+                let key = paymentDate.toISOString().split('T')[0];
+                repayments[key] = Math.round(interestAmount * 1000) / 1000;
+                today = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 1));
+            } else {
+                let finalPaymentDate = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
+                finalPaymentDate.setUTCFullYear(finalPaymentDate.getUTCFullYear() + 1);
+                let loanAmount = parseFloat(totalMaxLoanAmount);
+                let finalMonthInterest = loanAmount * dailyInterestRate * Math.ceil((finalPaymentDate - today) / (1000 * 60 * 60 * 24));
+                let key = finalPaymentDate.toISOString().split('T')[0];
+                repayments[key] = Math.round((finalMonthInterest + loanAmount) * 1000) / 1000;
+            }
+            firstPaymentMonth += 1;
+            if (firstPaymentMonth > 12) {
+                firstPaymentMonth -= 12;
+                firstPaymentYear += 1;
+            }
+        }
+        return repayments;
+        }
+
+      let today = new Date();
+
+      let startDate = {
+        year: today.getFullYear(),
+        month: today.getMonth() + 1,
+        day: today.getDate()
+      };
+
+      var repaymentData = computeRepaymentTimeline(totalMaxLoanAmount, parseFloat(interestRate), startDate);
+    
+      var tableDiv = document.createElement('div');
+      tableDiv.className = "table-responsive";
+      var table = document.createElement('table');
+      table.className = "table mb-0 table-striped invoice-table";
+      var thead = document.createElement('thead');
+      thead.className = "bg-active";
+      var tr = document.createElement('tr');
+      tr.className = "tr";
+
+      var headers = ["Date", "Repayment Amount"];
+
+      headers.forEach(function(header) {
+        var th = document.createElement('th');
+        th.className = "text-center";
+        th.textContent = header;
+        tr.appendChild(th);
+      });
+
+      thead.appendChild(tr);
+      table.appendChild(thead);
+
+      var tbody = document.createElement('tbody');
+      for (var date in repaymentData) {
+        var tr = document.createElement('tr');
+        var dateCell = document.createElement('td');
+        dateCell.className = "text-center";
+        dateCell.textContent = date;
+        tr.appendChild(dateCell);
+
+        var amountCell = document.createElement('td');
+        amountCell.className = "text-center";
+        amountCell.textContent = getFormattedAmount(repaymentData[date]);
+        tr.appendChild(amountCell);
+        
+        tbody.appendChild(tr);
+      }
+
+      table.appendChild(tbody);
+      tableDiv.appendChild(table);
+
+      document.querySelector('.repayment-container').appendChild(tableDiv);
     </script>
   </body>
 </html>

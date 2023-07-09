@@ -1,9 +1,5 @@
 $(function () {
   "use strict";
-
-  /**
-   * Generating PDF from HTML using jQuery
-   */
   $(document).on("click", "#invoice_download_btn", function () {
     var contentWidth = $("#invoice_wrapper").width();
     var contentHeight = $("#invoice_wrapper").height();
