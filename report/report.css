@@ -216,6 +216,11 @@ table th {
   background: #0b0d22;
 }
 
+@media print {
+  .invoice-2 {
+    background: #ffffff !important;
+  }
+}
 .invoice-2 .mb-30 {
   margin-bottom: 30px;
 }
@@ -364,8 +369,14 @@ table th {
 }
 
 .invoice-2 .bg-active {
-  background: #07304f;
+  background-color: #07304f;
   color: #ffffff !important;
+}
+
+@media print {
+  .invoice-2 .bg-active {
+    color: #000000 !important;
+  }
 }
 
 .invoice-2 .active-color {
