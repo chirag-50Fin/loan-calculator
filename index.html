@@ -200,7 +200,8 @@
               }
 
               $(".max-loan-card").css("display", "flex");
-
+              $(".scrip-select").attr("disabled", "true");
+              ".form-control".attr("disabled", "true");
               maxLoan.text(formatCurrency(totalMaxLoanAmount));
               $("#tableBody tr").each(function () {
                 $(this).find("td:last-child").remove();
