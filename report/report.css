@@ -394,7 +394,7 @@ table th {
   padding: 30px 50px 20px;
 }
 
-.invoice-2 .contact-info a {
+.invoice-2 .contact-info span {
   margin: 0 30px 10px 0;
   color: #fff;
   font-size: 14px;
@@ -402,7 +402,7 @@ table th {
   line-height: 50px;
 }
 
-.invoice-2 .contact-info a i {
+.invoice-2 .contact-info span i {
   width: 50px;
   height: 50px;
   background: #ffffff;
