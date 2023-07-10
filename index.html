@@ -150,16 +150,16 @@
             var apiResponse = {};
 
             if (!isin && !quantityStr) {
-              errorMsg = "Scrip not selected and quantity not entered.";
+              errorMsg = "Mutual fund not selected and quantity not entered";
               error = true;
             } else if (!isin) {
-              errorMsg = "Please select all the scrips";
+              errorMsg = "Please select all the mutual funds";
               error = true;
             } else if (!quantityStr) {
-              errorMsg = "Enter a valid quantity for all scrips";
+              errorMsg = "Enter a valid quantity for all mutual funds";
               error = true;
             } else if (isNaN(quantity) || quantity <= 0) {
-              errorMsg = "Enter a valid quantity for all scrips";
+              errorMsg = "Enter a valid quantity for all mutual funds";
               error = true;
             } else {
               if (output.isin_quantity[isin]) {
