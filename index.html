@@ -172,6 +172,9 @@
 
         if (error) {
           $("#errorMessage").text(errorMsg);
+          $(".add-icon").css("display", "block");
+          $(".remove-icon").css("display", "block");
+          $(".loader").css("display", "none");
         } else {
           $.ajax({
             url: "https://fifty-fin-external-n77ca4jn5a-el.a.run.app/api/v1/generate_configuration/",
@@ -188,7 +191,7 @@
 
               if (totalMaxLoanAmount < 25000) {
                 $("#errorMessage").text(
-                  "Please add more scrips. Minimum portfolio value must be at least ₹50,000"
+                  "Please add more mutual funds. Minimum portfolio value must be at least ₹50,000"
                 );
                 $(".add-icon").css("display", "block");
                 $(".remove-icon").css("display", "block");
