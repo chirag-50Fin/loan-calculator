@@ -188,7 +188,7 @@
 
               if (totalMaxLoanAmount < 25000) {
                 $("#errorMessage").text(
-                  "Please add more scrips. Minimum loan amount must be at least ₹25,000"
+                  "Please add more scrips. Minimum portfolio value must be at least ₹50,000"
                 );
                 $(".add-icon").css("display", "block");
                 $(".remove-icon").css("display", "block");
@@ -254,6 +254,7 @@
 
         localStorage.setItem("totalMaxLoanAmount", totalMaxLoanAmount);
         localStorage.setItem("data", JSON.stringify(data));
+        $(".download-btn").addClass("d-none");
 
         window.open("./report/report.html", "_blank");
       });
