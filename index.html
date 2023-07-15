@@ -63,7 +63,7 @@
 
       <p id="errorMessage" style="color: #fe2434"></p>
       <div class="d-flex justify-content-center">
-        <button id="submitButton" class="submit-btn">Submit</button>
+        <button id="submitBtn" class="submit-btn">Submit</button>
         <button class="download-btn d-none">View Report</button>
       </div>
       <p class="text-center mt-5 mb-2">Powered By</p>
@@ -75,25 +75,34 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 
     <script type="application/javascript">
-      var maxLoan = $("#maxLoan");
-      var scripJson = [];
-      var apiResponse = {};
+      let maxLoan = $("#maxLoan");
+      let tableBody = $("#tableBody");
+      let formControl = $(".form-control");
+      let scripSelect = $(".scrip-select");
+      let select_options = $(".select2-results__options");
+      let errorMessage = $("#errorMessage");
+      let addIconContainer = $(".add-icon-container");
+      let loader = $($(".loader"));
+      let downloadBtn = $(".download-btn");
+      let maxLoanCard = $(".max-loan-card");
+      let scripJson = [];
+      let apiResponse = {};
 
       $(document).ready(function () {
         $.getJSON("scrip.json", function (data) {
-          var scripData = data;
+          let scripData = data;
           $.each(scripData, function (key, scrip) {
-            var item = {
+            let item = {
               name: scrip.name + " (" + scrip.isin + ")",
               isin: scrip.isin,
             };
             scripJson.push(item);
           });
-
-          initializeSelect2($(".scrip-select"));
+          initializeSelect2(scripSelect);
         });
       });
 
+      //   Initialize select2
       function initializeSelect2(selectElement) {
         $.each(scripJson, function (key, scrip) {
           selectElement.append(new Option(scrip.name, scrip.isin));
@@ -106,75 +115,74 @@
             width: "100%",
           })
           .on("select2:opening", function () {
-            $(".select2-results__options").addClass("max-width-option");
+            select_options.addClass("max-width-option");
             setTimeout(function () {
               $(".select2-search__field")[0].focus();
             }, 10);
           })
           .on("select2:close", function () {
-            $(".select2-results__options").removeClass("max-width-option");
+            select_options.removeClass("max-width-option");
           });
       }
 
+      // Add more rows
       $(document).on("click", ".add-icon", function () {
-        var newRow = $(
+        let newRow = $(
           '<tr><td><select class="scrip-select form-control" style="width: 100%"><option></option></select></td><td><input type="number" class="form-control" min="0" step="0.01" style="appearance: none; text-align: right" /></td><td class="text-right action-cell"><img src="remove.svg" class="remove-icon" alt="Remove icon"/></td></tr>'
         );
-        $("#tableBody").append(newRow);
+        tableBody.append(newRow);
         initializeSelect2(newRow.find("select"));
       });
 
+      // Remove a row
       $(document).on("click", ".remove-icon", function () {
         $(this).closest("tr").remove();
       });
 
-      $(document).on("click", "#submitButton", function () {
-        $(".loader").css("display", "block");
+      // Submit Button
+      $(document).on("click", "#submitBtn", function () {
+        let output = {};
+        let error = false;
+        let errorMsg = "";
+        loader.css("display", "block");
         $(".add-icon").css("display", "none");
         $(".remove-icon").css("display", "none");
-        var output = {};
         output.isin_quantity = {};
-        var error = false;
-        var errorMsg = "";
+        errorMessage.text("");
 
-        $("#errorMessage").text("");
+        tableBody.find("tr").each(function () {
+          let $row = $(this);
+          let isin = $row.find("select").val();
+          let quantityStr = $row.find("input").val();
+          let quantity = parseFloat(quantityStr);
+          let apiResponse = {};
 
-        $("#tableBody")
-          .find("tr")
-          .each(function () {
-            var $row = $(this);
-
-            var isin = $row.find("select").val();
-            var quantityStr = $row.find("input").val();
-            var quantity = parseFloat(quantityStr);
-            var apiResponse = {};
-
-            if (!isin && !quantityStr) {
-              errorMsg = "Mutual fund not selected and quantity not entered";
-              error = true;
-            } else if (!isin) {
-              errorMsg = "Please select all the mutual funds";
-              error = true;
-            } else if (!quantityStr) {
-              errorMsg = "Enter a valid quantity for all mutual funds";
-              error = true;
-            } else if (isNaN(quantity) || quantity <= 0) {
-              errorMsg = "Enter a valid quantity for all mutual funds";
-              error = true;
+          if (!isin && !quantityStr) {
+            errorMsg = "Mutual fund not selected and quantity not entered";
+            error = true;
+          } else if (!isin) {
+            errorMsg = "Please select all the mutual funds";
+            error = true;
+          } else if (!quantityStr) {
+            errorMsg = "Enter a valid quantity for all mutual funds";
+            error = true;
+          } else if (isNaN(quantity) || quantity <= 0) {
+            errorMsg = "Enter a valid quantity for all mutual funds";
+            error = true;
+          } else {
+            if (output.isin_quantity[isin]) {
+              output.isin_quantity[isin] += quantity;
             } else {
-              if (output.isin_quantity[isin]) {
-                output.isin_quantity[isin] += quantity;
-              } else {
-                output.isin_quantity[isin] = quantity;
-              }
+              output.isin_quantity[isin] = quantity;
             }
-          });
+          }
+        });
 
         if (error) {
-          $("#errorMessage").text(errorMsg);
+          errorMessage.text(errorMsg);
           $(".add-icon").css("display", "block");
           $(".remove-icon").css("display", "block");
-          $(".loader").css("display", "none");
+          loader.css("display", "none");
         } else {
           $.ajax({
             url: "https://fifty-fin-external-n77ca4jn5a-el.a.run.app/api/v1/generate_configuration/",
@@ -184,32 +192,32 @@
             dataType: "json",
             success: function (response) {
               apiResponse = response.data;
-              var totalMaxLoanAmount = 0;
+              let totalMaxLoanAmount = 0;
               $.each(response.data.Approved_ISIN, function (isin, details) {
                 totalMaxLoanAmount += details.max_loan_amount;
               });
 
               if (totalMaxLoanAmount < 25000) {
-                $("#errorMessage").text(
+                errorMessage.text(
                   "Please add more mutual funds. Minimum portfolio value must be at least ₹50,000"
                 );
                 $(".add-icon").css("display", "block");
                 $(".remove-icon").css("display", "block");
-                $(".loader").css("display", "none");
+                loader.css("display", "none");
                 return;
               }
 
-              $(".max-loan-card").css("display", "flex");
-              $(".scrip-select").attr("disabled", "true");
-              $(".form-control").attr("disabled", "true");
+              maxLoanCard.css("display", "flex");
+              scripSelect.attr("disabled", "true");
+              formControl.attr("disabled", "true");
               maxLoan.text(formatCurrency(totalMaxLoanAmount));
               $("#tableBody tr").each(function () {
                 $(this).find("td:last-child").remove();
               });
               $(".add-icon-container").remove();
               $(".remove-icon").remove();
-              $(".submit-btn").addClass("d-none");
-              $(".download-btn").removeClass("d-none");
+              $("#submitBtn").addClass("d-none");
+              downloadBtn.removeClass("d-none");
 
               confetti({
                 particleCount: 100,
@@ -217,11 +225,11 @@
                 origin: { y: 0.6 },
               });
 
-              $(".loader").css("display", "none");
+              loader.css("display", "none");
             },
             error: function (jqXHR, textStatus, errorThrown) {
-              $(".loader").css("display", "none");
-              $("#errorMessage").text(
+              loader.css("display", "none");
+              errorMessage.text(
                 "Request failed: " + textStatus + ", " + errorThrown
               );
             },
@@ -237,15 +245,14 @@
           maximumFractionDigits: 0,
         }).format(amount);
       }
-    </script>
 
-    <script>
       $(document).on("click", ".download-btn", function () {
-        var data = [];
-        var totalMaxLoanAmount = 0;
+        let data = [];
+        let totalMaxLoanAmount = 0;
+        console.log("here");
 
-        for (var key in apiResponse.Approved_ISIN) {
-          var item = apiResponse.Approved_ISIN[key];
+        for (let key in apiResponse.Approved_ISIN) {
+          let item = apiResponse.Approved_ISIN[key];
           item.price = item.price.toFixed(2);
           item.quantity = item.quantity.toFixed(2);
           item.loan_to_value_ratio = item.loan_to_value_ratio.toFixed(2);
@@ -258,7 +265,7 @@
 
         localStorage.setItem("totalMaxLoanAmount", totalMaxLoanAmount);
         localStorage.setItem("data", JSON.stringify(data));
-        $(".download-btn").addClass("d-none");
+        downloadBtn.addClass("d-none");
 
         window.open("./report/report.html", "_blank");
       });

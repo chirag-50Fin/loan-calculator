@@ -102,6 +102,7 @@
                           <th class="text-center">Type</th>
                           <th style="text-align: end">Quantity</th>
                           <th style="text-align: end">Price</th>
+                          <th style="text-align: end">Amount</th>
                           <th style="text-align: end">LTV</th>
                           <th style="text-align: end">Max Loan Amount</th>
                         </tr>
@@ -231,6 +232,11 @@
         priceCell.style.textAlign = "end";
         priceCell.textContent = getFormattedAmount(item.price);
         row.appendChild(priceCell);
+
+        var amountCell = document.createElement("td");
+        amountCell.style.textAlign = "end";
+        amountCell.textContent = getFormattedAmount(item.price * item.quantity);
+        row.appendChild(amountCell);
 
         var ltvRatioCell = document.createElement("td");
         ltvRatioCell.style.textAlign = "end";
