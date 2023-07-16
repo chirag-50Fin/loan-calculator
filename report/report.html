@@ -102,8 +102,8 @@
                           <th class="text-center">Type</th>
                           <th style="text-align: end">Quantity</th>
                           <th style="text-align: end">Price</th>
-                          <th style="text-align: end">Amount</th>
                           <th style="text-align: end">LTV</th>
+                          <th style="text-align: end">Amount</th>
                           <th style="text-align: end">Max Loan Amount</th>
                         </tr>
                       </thead>
@@ -166,6 +166,7 @@
     <script src="report.js"></script>
 
     <script>
+      var totalPortfolioAmount = localStorage.getItem("totalPortfolioAmount");
       var totalMaxLoanAmount = localStorage.getItem("totalMaxLoanAmount");
       var data = JSON.parse(localStorage.getItem("data"));
       var interestRate = 0.12;
@@ -233,15 +234,15 @@
         priceCell.textContent = getFormattedAmount(item.price);
         row.appendChild(priceCell);
 
-        var amountCell = document.createElement("td");
-        amountCell.style.textAlign = "end";
-        amountCell.textContent = getFormattedAmount(item.price * item.quantity);
-        row.appendChild(amountCell);
-
         var ltvRatioCell = document.createElement("td");
         ltvRatioCell.style.textAlign = "end";
         ltvRatioCell.textContent = item.loan_to_value_ratio;
         row.appendChild(ltvRatioCell);
+
+        var amountCell = document.createElement("td");
+        amountCell.style.textAlign = "end";
+        amountCell.textContent = getFormattedAmount(item.price * item.quantity);
+        row.appendChild(amountCell);
 
         var maxLoanAmountCell = document.createElement("td");
         maxLoanAmountCell.style.textAlign = "end";
@@ -249,22 +250,22 @@
           item.max_loan_amount
         );
         row.appendChild(maxLoanAmountCell);
-
         tableBody.appendChild(row);
       });
 
       var lastRow = document.createElement("tr");
       lastRow.classList.add("tr2");
 
-      for (var i = 0; i < 3; i++) {
+      for (var i = 0; i < 5; i++) {
         var emptyCell = document.createElement("td");
         lastRow.appendChild(emptyCell);
       }
       var totalLoanAmountCell = document.createElement("td");
       totalLoanAmountCell.className = "last-row active-color";
-      totalLoanAmountCell.colSpan = "3";
-      totalLoanAmountCell.textContent = "Total Loan Amount";
+      totalLoanAmountCell.colSpan = "2";
+      totalLoanAmountCell.textContent = getFormattedAmount(totalPortfolioAmount);
       lastRow.appendChild(totalLoanAmountCell);
+      
 
       var loanAmountValueCell = document.createElement("td");
       loanAmountValueCell.className = "last-row-value active-color";

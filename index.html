@@ -17,6 +17,11 @@
   </head>
   <body>
     <h1 class="card-title">Check Loan Eligibility</h1>
+    <p style="text-align: center">
+      Determine the maximum loan amount you are eligible for by selecting from a
+      list of approved mutual funds and specifying the quantity for each of
+      them.
+    </p>
     <img src="loan.svg" class="loan-image" alt="loan" />
     <div class="table-container">
       <table class="table">
@@ -192,8 +197,11 @@
             dataType: "json",
             success: function (response) {
               apiResponse = response.data;
+              let totalPortfolioAmount = 0;
               let totalMaxLoanAmount = 0;
               $.each(response.data.Approved_ISIN, function (isin, details) {
+                let amount = details.quantity * details.price;
+                totalPortfolioAmount += details.amount;
                 totalMaxLoanAmount += details.max_loan_amount;
               });
 
@@ -249,7 +257,7 @@
       $(document).on("click", ".download-btn", function () {
         let data = [];
         let totalMaxLoanAmount = 0;
-        console.log("here");
+        let totalPortfolioAmount = 0;
 
         for (let key in apiResponse.Approved_ISIN) {
           let item = apiResponse.Approved_ISIN[key];
@@ -258,11 +266,14 @@
           item.loan_to_value_ratio = item.loan_to_value_ratio.toFixed(2);
           item.max_loan_amount = item.max_loan_amount.toFixed(2);
           data.push(item);
+          totalPortfolioAmount += parseFloat(item.quantity * item.price);
           totalMaxLoanAmount += parseFloat(item.max_loan_amount);
         }
 
+        totalPortfolioAmount = totalPortfolioAmount.toFixed(2);
         totalMaxLoanAmount = totalMaxLoanAmount.toFixed(2);
 
+        localStorage.setItem("totalPortfolioAmount", totalPortfolioAmount);
         localStorage.setItem("totalMaxLoanAmount", totalMaxLoanAmount);
         localStorage.setItem("data", JSON.stringify(data));
         downloadBtn.addClass("d-none");
