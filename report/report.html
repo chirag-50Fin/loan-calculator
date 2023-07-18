@@ -318,7 +318,6 @@
             } else {
                 let finalPaymentDate = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
                 finalPaymentDate.setUTCFullYear(finalPaymentDate.getUTCFullYear() + 1);
-                let loanAmount = parseFloat(totalMaxLoanAmount);
                 let finalMonthInterest = loanAmount * dailyInterestRate * Math.ceil((finalPaymentDate - today) / (1000 * 60 * 60 * 24));
                 let key = formatDate(finalPaymentDate);
                 repayments[key] = Math.round((finalMonthInterest + loanAmount) * 1000) / 1000;
@@ -328,9 +327,17 @@
                 firstPaymentMonth -= 12;
                 firstPaymentYear += 1;
             }
-          }
-          return repayments;
         }
+        return repayments;
+    }
+
+function formatDate(date) {
+    let year = date.getUTCFullYear();
+    let month = date.getUTCMonth() + 1;
+    let day = date.getUTCDate();
+    return year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+}
+
 
       let today = new Date();
 
