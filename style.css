@@ -7,6 +7,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  font-size: 0.85rem;
 }
 
 header {
@@ -98,6 +99,7 @@ input {
   border: 2px solid #8c8f9f;
   border-radius: 5px;
   color: #45fef1;
+  font-size: 14px !important;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -146,6 +148,7 @@ input[type="number"] {
   border: 2px solid #828dff !important;
   height: 40px;
   max-width: 100%;
+  font-size: 13px;
 }
 
 .select2-selection:focus-visible {
@@ -162,13 +165,13 @@ input[type="number"] {
   white-space: nowrap;
 }
 
+.select2-results__option {
+  font-size: 12px;
+}
+
 .select2-container .select2-selection--single .select2-selection__rendered {
   display: inline-block !important;
   margin-top: 0.25rem;
-}
-
-.select2-container--default .select2-results > .select2-results__options {
-  overflow: hidden;
 }
 
 .select2-container--default .select2-results__option[aria-selected="true"] {
@@ -263,7 +266,7 @@ input[type="number"] {
 }
 
 .table th {
-  font-size: 18px;
+  font-size: 14px;
   padding: 0 !important;
 }
 
