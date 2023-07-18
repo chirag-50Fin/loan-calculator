@@ -275,6 +275,11 @@
       var tableBody = document.querySelector(".invoice-table tbody");
       tableBody.appendChild(lastRow);
 
+      function formatDate(date) {
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+      }
+
       // loan repayment timeline
       function computeRepaymentTimeline(loanAmount, interestRate, startDate) {
         let today = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
@@ -300,14 +305,14 @@
             let paymentDate = new Date(Date.UTC(firstPaymentYear, firstPaymentMonth - 1, 7));
             if (i < 11) {
                 let interestEndDate, interestDays;
-                if (i == 0) {
+                if (i === 0) {
                     interestEndDate = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 0));
                     interestDays = Math.ceil((interestEndDate - today) / (1000 * 60 * 60 * 24)) + 1;
                 } else {
                     interestDays = Math.ceil((paymentDate - today) / (1000 * 60 * 60 * 24));
                 }
                 let interestAmount = loanAmount * dailyInterestRate * interestDays;
-                let key = paymentDate.toISOString().split('T')[0];
+                let key = formatDate(paymentDate);
                 repayments[key] = Math.round(interestAmount * 1000) / 1000;
                 today = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 1));
             } else {
@@ -315,7 +320,7 @@
                 finalPaymentDate.setUTCFullYear(finalPaymentDate.getUTCFullYear() + 1);
                 let loanAmount = parseFloat(totalMaxLoanAmount);
                 let finalMonthInterest = loanAmount * dailyInterestRate * Math.ceil((finalPaymentDate - today) / (1000 * 60 * 60 * 24));
-                let key = finalPaymentDate.toISOString().split('T')[0];
+                let key = formatDate(finalPaymentDate);
                 repayments[key] = Math.round((finalMonthInterest + loanAmount) * 1000) / 1000;
             }
             firstPaymentMonth += 1;
@@ -323,8 +328,8 @@
                 firstPaymentMonth -= 12;
                 firstPaymentYear += 1;
             }
-        }
-        return repayments;
+          }
+          return repayments;
         }
 
       let today = new Date();
