@@ -283,5 +283,23 @@
         window.open("./report/report.html", "_blank");
       });
     </script>
+
+    <script>
+      window.addEventListener("message", function (event) {
+        if (event.data === "getIframeHeight") {
+          const calculatorContainer =
+            document.getElementsByClassName("loan-calculator")[0];
+          const iframeHeight = calculatorContainer.offsetHeight;
+          window.parent.postMessage("iframeHeight:" + iframeHeight, "*");
+        } else if (event.data === "increaseIframeHeight") {
+          const calculatorContainer =
+            document.getElementsByClassName("loan-calculator")[0];
+          calculatorContainer.style.height =
+            calculatorContainer.offsetHeight + 50 + "px";
+          const iframeHeight = calculatorContainer.offsetHeight;
+          window.parent.postMessage("iframeHeight:" + iframeHeight, "*");
+        }
+      });
+    </script>
   </body>
 </html>
