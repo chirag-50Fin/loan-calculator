@@ -10,6 +10,11 @@ body {
   min-height: 100vh;
 }
 
+.loan-calculator {
+  display: flex;
+  flex-direction: column;
+}
+
 p {
   margin-bottom: 10px;
 }
