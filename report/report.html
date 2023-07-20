@@ -301,26 +301,30 @@
             firstPaymentYear += 1;
         }
         let repayments = {};
+        let interestAmount = 0;
         for (let i = 0; i < 12; i++) {
             let paymentDate = new Date(Date.UTC(firstPaymentYear, firstPaymentMonth - 1, 7));
             if (i < 11) {
-                let interestEndDate, interestDays;
-                if (i === 0) {
-                    interestEndDate = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 0));
-                    interestDays = Math.ceil((interestEndDate - today) / (1000 * 60 * 60 * 24)) + 1;
-                } else {
-                    interestDays = Math.ceil((paymentDate - today) / (1000 * 60 * 60 * 24));
-                }
-                let interestAmount = loanAmount * dailyInterestRate * interestDays;
+                let interestEndDate = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 0));
+                let interestDays = Math.ceil((interestEndDate - today) / (1000 * 60 * 60 * 24)) + 1;
+                interestAmount += loanAmount * dailyInterestRate * interestDays;
                 let key = formatDate(paymentDate);
-                repayments[key] = Math.round(interestAmount * 1000) / 1000;
+                repayments[key] = Math.round(interestAmount * 100) / 100;
                 today = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 1));
+                interestAmount = 0;
             } else {
                 let finalPaymentDate = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
                 finalPaymentDate.setUTCFullYear(finalPaymentDate.getUTCFullYear() + 1);
-                let finalMonthInterest = loanAmount * dailyInterestRate * Math.ceil((finalPaymentDate - today) / (1000 * 60 * 60 * 24));
+                if (finalPaymentDate > new Date(Date.UTC(startDate.year + 1, startDate.month - 1, 19))) {
+                    finalPaymentDate = new Date(Date.UTC(startDate.year + 1, startDate.month - 1, 19));
+                }
+                if (finalPaymentDate < today) {
+                    finalPaymentDate = new Date(today);
+                }
+                let interestDays = Math.ceil((finalPaymentDate - today) / (1000 * 60 * 60 * 24)) + 1;
+                let finalMonthInterest = loanAmount * dailyInterestRate * interestDays;
                 let key = formatDate(finalPaymentDate);
-                repayments[key] = Math.round((finalMonthInterest + loanAmount) * 1000) / 1000;
+                repayments[key] = Math.round((finalMonthInterest + parseFloat(loanAmount)) * 100) / 100;
             }
             firstPaymentMonth += 1;
             if (firstPaymentMonth > 12) {
@@ -328,26 +332,20 @@
                 firstPaymentYear += 1;
             }
         }
+        let totalPayment = Object.values(repayments).reduce((a, b) => a + b, 0);
         return repayments;
-    }
-
-function formatDate(date) {
-    let year = date.getUTCFullYear();
-    let month = date.getUTCMonth() + 1;
-    let day = date.getUTCDate();
-    return year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
-}
-
+      }
 
       let today = new Date();
-
       let startDate = {
         year: today.getFullYear(),
         month: today.getMonth() + 1,
         day: today.getDate()
       };
 
+      console.log(totalMaxLoanAmount, parseFloat(interestRate), startDate)
       var repaymentData = computeRepaymentTimeline(totalMaxLoanAmount, parseFloat(interestRate), startDate);
+      console.log(repaymentData)
     
       var tableDiv = document.createElement('div');
       tableDiv.className = "table-responsive";
