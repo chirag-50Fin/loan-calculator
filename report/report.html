@@ -315,9 +315,6 @@
             } else {
                 let finalPaymentDate = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
                 finalPaymentDate.setUTCFullYear(finalPaymentDate.getUTCFullYear() + 1);
-                if (finalPaymentDate > new Date(Date.UTC(startDate.year + 1, startDate.month - 1, 19))) {
-                    finalPaymentDate = new Date(Date.UTC(startDate.year + 1, startDate.month - 1, 19));
-                }
                 if (finalPaymentDate < today) {
                     finalPaymentDate = new Date(today);
                 }
