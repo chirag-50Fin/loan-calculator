@@ -76,31 +76,88 @@
       </div>
 
       <p id="errorMessage" style="color: #fe2434"></p>
+
       <div class="d-flex justify-content-center">
         <button id="submitBtn" class="submit-btn">Submit</button>
-        <button class="download-btn d-none">View Report</button>
+        <button
+          class="download-btn d-none"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#myModal"
+        >
+          View Detailed Report
+        </button>
       </div>
       <p class="text-center mt-5 mb-2">Powered By</p>
       <img src="./logo.svg" height="50" width="auto" />
     </div>
 
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 style="text-align: center; margin: 1rem 0;">Please Provide Basic Details</h3>
+            <form id="userInfoForm">
+              <div class="mb-3">
+                <label for="fullName" class="form-label">Full Name*</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number*</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="phone"
+                  name="phone"
+                  placeholder="Enter your phone number"
+                />
+              </div>
+              <p id="formErrorMessage" style="color: #fe2434"></p>
+              <button
+              class="form-submit-btn"
+              style="background-color: #24feee"
+              type="submit"
+            >
+              Submit
+            </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 
     <script type="application/javascript">
       let maxLoan = $("#maxLoan");
       let tableBody = $("#tableBody");
-      let formControl = $(".form-control");
+      let formControl = $('.tableContainer').find(".form-control")
       let scripSelect = $(".scrip-select");
       let select_options = $(".select2-results__options");
       let errorMessage = $("#errorMessage");
+      let formErrorMessage = $("#formErrorMessage");
       let addIconContainer = $(".add-icon-container");
       let loader = $($(".loader"));
       let downloadBtn = $(".download-btn");
       let maxLoanCard = $(".max-loan-card");
       let scripJson = [];
       let apiResponse = {};
+      let myModal = $("#myModal");
 
       $(document).ready(function () {
         $.getJSON("scrip.json", function (data) {
@@ -264,6 +321,8 @@
       }
 
       $(document).on("click", ".download-btn", function () {
+        $("#myModal").modal("show");
+
         let data = [];
         let totalMaxLoanAmount = 0;
         let totalPortfolioAmount = 0;
@@ -285,9 +344,54 @@
         localStorage.setItem("totalPortfolioAmount", totalPortfolioAmount);
         localStorage.setItem("totalMaxLoanAmount", totalMaxLoanAmount);
         localStorage.setItem("data", JSON.stringify(data));
-        downloadBtn.addClass("d-none");
+      });
 
-        window.open("./report/report.html", "_blank");
+      function postToGoogleForm(fullName, phone) {
+        var googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSfNrGZqo9pp4AtWtJrL03nrpqeP_IMjRkOeOQckMGabQ5yEFw/formResponse";
+        totalPortfolioAmount= localStorage.getItem("totalPortfolioAmount");
+        var dataToPost = {
+          "entry.2106344627": fullName,
+          "entry.468820478": phone ,
+          "entry.112365369": totalPortfolioAmount
+        };
+
+        $.ajax({
+          type: "POST",
+          url: googleFormURL,
+          data: dataToPost,
+          dataType: "json",
+          statusCode: {
+            0: function() {
+              window.open("./report/report.html", "_blank");
+            },
+            200: function() {
+              window.open("./report/report.html", "_blank");
+            }
+          }
+        });
+      }
+
+
+      $("#userInfoForm").submit(function (e) {
+        e.preventDefault();
+        formErrorMessage.text("");
+        let fullName = $("#fullName").val();
+        let phone = $("#phone").val();
+        localStorage.setItem("fullName", fullName);
+        localStorage.setItem("phone", phone);
+
+        if (fullName === "" || phone === "") {
+          formErrorMessage.text("Please fill all the details");
+          console.log("here");
+        }
+        if (phone.length < 10 || isNaN(phone)) {
+          formErrorMessage.text("Please enter a valid phone number")
+          console.log("here2");
+        }
+        
+        if (fullName !== "" && phone !== "" && phone.length >= 10 && !isNaN(phone)) {
+          postToGoogleForm(fullName, phone);
+        }
       });
     </script>
   </body>
