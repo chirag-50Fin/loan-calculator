@@ -17,7 +17,6 @@ header {
   height: 80px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
   position: fixed;
   top: 0;
 }
@@ -46,7 +45,7 @@ p {
   width: 50%;
   max-width: 250px;
   height: auto;
-  margin: 2rem auto 2rem auto;
+  margin: 0rem auto 1rem auto;
 }
 
 .card-title {
@@ -54,7 +53,7 @@ p {
   color: white;
   font-size: 2.5rem;
   font-weight: bold;
-  margin: 120px auto 1rem auto;
+  margin: 85px auto 0.75rem auto;
 }
 
 .table-container {
@@ -64,7 +63,7 @@ p {
   padding: 1rem 2rem;
   text-align: center;
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
   padding: 2rem;
 }
 
