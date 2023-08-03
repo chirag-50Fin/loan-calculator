@@ -346,7 +346,7 @@
         localStorage.setItem("data", JSON.stringify(data));
       });
 
-      function postToGoogleForm(fullName, phone) {
+      function postToGoogleForm(fullName, phone, reportTab) {
         var googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSfNrGZqo9pp4AtWtJrL03nrpqeP_IMjRkOeOQckMGabQ5yEFw/formResponse";
         totalPortfolioAmount= localStorage.getItem("totalPortfolioAmount");
         var dataToPost = {
@@ -362,15 +362,14 @@
           dataType: "json",
           statusCode: {
             0: function() {
-              window.open("./report/report.html", "_blank");
+              reportTab.location.href = "./report/report.html";
             },
             200: function() {
-              window.open("./report/report.html", "_blank");
+              reportTab.location.href = "./report/report.html";
             }
           }
         });
       }
-
 
       $("#userInfoForm").submit(function (e) {
         e.preventDefault();
@@ -390,9 +389,11 @@
         }
         
         if (fullName !== "" && phone !== "" && phone.length >= 10 && !isNaN(phone)) {
-          postToGoogleForm(fullName, phone);
+          var reportTab = window.open('./report/loading.html', '_blank');
+          postToGoogleForm(fullName, phone, reportTab);
         }
       });
+
     </script>
   </body>
 </html>
