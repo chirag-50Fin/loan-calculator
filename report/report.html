@@ -172,33 +172,33 @@
       var interestRate = 0.12;
 
       function getFormattedNumber(amount) {
-        return new Intl.NumberFormat("en-IN", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(amount);
+          return new Intl.NumberFormat("en-IN", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+          }).format(amount);
       }
 
       function getFormattedAmount(amount) {
-        return (
-          "₹" +
-          new Intl.NumberFormat("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          }).format(amount)
-        );
+          return (
+              "₹" +
+              new Intl.NumberFormat("en-IN", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+              }).format(amount)
+          );
       }
 
       function getFormattedDate() {
-        const currentDate = new Date();
-        const day = currentDate.getDate();
-        const month = currentDate.getMonth() + 1;
-        const year = currentDate.getFullYear();
+          const currentDate = new Date();
+          const day = currentDate.getDate();
+          const month = currentDate.getMonth() + 1;
+          const year = currentDate.getFullYear();
 
-        const formattedDay = day < 10 ? `0${day}` : day;
-        const formattedMonth = month < 10 ? `0${month}` : month;
+          const formattedDay = day < 10 ? `0${day}` : day;
+          const formattedMonth = month < 10 ? `0${month}` : month;
 
-        const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
-        return formattedDate;
+          const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+          return formattedDate;
       }
 
       const todayDate = getFormattedDate();
@@ -206,66 +206,66 @@
       document.querySelector(".today-date").textContent = '(Based on ' + todayDate + ')';
       var tableBody = document.querySelector(".invoice-table tbody");
 
-      data.forEach(function (item) {
-        var row = document.createElement("tr");
+      data.forEach(function(item) {
+          var row = document.createElement("tr");
 
-        var isinCell = document.createElement("td");
-        isinCell.className = "text-center";
-        isinCell.textContent = item.isin;
-        row.appendChild(isinCell);
+          var isinCell = document.createElement("td");
+          isinCell.className = "text-center";
+          isinCell.textContent = item.isin;
+          row.appendChild(isinCell);
 
-        var nameCell = document.createElement("td");
-        nameCell.className = "text-center";
-        nameCell.textContent = item.name;
-        row.appendChild(nameCell);
+          var nameCell = document.createElement("td");
+          nameCell.className = "text-center";
+          nameCell.textContent = item.name;
+          row.appendChild(nameCell);
 
-        var subTypeCell = document.createElement("td");
-        subTypeCell.className = "text-center";
-        subTypeCell.textContent = item.scrip_sub_type;
-        row.appendChild(subTypeCell);
+          var subTypeCell = document.createElement("td");
+          subTypeCell.className = "text-center";
+          subTypeCell.textContent = item.scrip_sub_type;
+          row.appendChild(subTypeCell);
 
-        var quantityCell = document.createElement("td");
-        quantityCell.style.textAlign = "end";
-        quantityCell.textContent = getFormattedNumber(item.quantity);
-        row.appendChild(quantityCell);
+          var quantityCell = document.createElement("td");
+          quantityCell.style.textAlign = "end";
+          quantityCell.textContent = getFormattedNumber(item.quantity);
+          row.appendChild(quantityCell);
 
-        var priceCell = document.createElement("td");
-        priceCell.style.textAlign = "end";
-        priceCell.textContent = getFormattedAmount(item.price);
-        row.appendChild(priceCell);
+          var priceCell = document.createElement("td");
+          priceCell.style.textAlign = "end";
+          priceCell.textContent = getFormattedAmount(item.price);
+          row.appendChild(priceCell);
 
-        var ltvRatioCell = document.createElement("td");
-        ltvRatioCell.style.textAlign = "end";
-        ltvRatioCell.textContent = item.loan_to_value_ratio;
-        row.appendChild(ltvRatioCell);
+          var ltvRatioCell = document.createElement("td");
+          ltvRatioCell.style.textAlign = "end";
+          ltvRatioCell.textContent = item.loan_to_value_ratio;
+          row.appendChild(ltvRatioCell);
 
-        var amountCell = document.createElement("td");
-        amountCell.style.textAlign = "end";
-        amountCell.textContent = getFormattedAmount(item.price * item.quantity);
-        row.appendChild(amountCell);
+          var amountCell = document.createElement("td");
+          amountCell.style.textAlign = "end";
+          amountCell.textContent = getFormattedAmount(item.price * item.quantity);
+          row.appendChild(amountCell);
 
-        var maxLoanAmountCell = document.createElement("td");
-        maxLoanAmountCell.style.textAlign = "end";
-        maxLoanAmountCell.textContent = getFormattedAmount(
-          item.max_loan_amount
-        );
-        row.appendChild(maxLoanAmountCell);
-        tableBody.appendChild(row);
+          var maxLoanAmountCell = document.createElement("td");
+          maxLoanAmountCell.style.textAlign = "end";
+          maxLoanAmountCell.textContent = getFormattedAmount(
+              item.max_loan_amount
+          );
+          row.appendChild(maxLoanAmountCell);
+          tableBody.appendChild(row);
       });
 
       var lastRow = document.createElement("tr");
       lastRow.classList.add("tr2");
 
       for (var i = 0; i < 5; i++) {
-        var emptyCell = document.createElement("td");
-        lastRow.appendChild(emptyCell);
+          var emptyCell = document.createElement("td");
+          lastRow.appendChild(emptyCell);
       }
       var totalLoanAmountCell = document.createElement("td");
       totalLoanAmountCell.className = "last-row active-color";
       totalLoanAmountCell.colSpan = "2";
       totalLoanAmountCell.textContent = getFormattedAmount(totalPortfolioAmount);
       lastRow.appendChild(totalLoanAmountCell);
-      
+
 
       var loanAmountValueCell = document.createElement("td");
       loanAmountValueCell.className = "last-row-value active-color";
@@ -276,74 +276,125 @@
       tableBody.appendChild(lastRow);
 
       function formatDate(date) {
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        return date.toLocaleDateString('en-US', options);
+          const options = {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric'
+          };
+          return date.toLocaleDateString('en-US', options);
       }
 
-      // loan repayment timeline
-      function computeRepaymentTimeline(loanAmount, interestRate, startDate) {
-        let today = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
-        let currentDay = today.getUTCDate();
-        let currentMonth = today.getUTCMonth() + 1;
-        let currentYear = today.getUTCFullYear();
-        let dailyInterestRate = interestRate / 365;
-        let firstPaymentMonth;
-        let firstPaymentYear;
-        if (currentDay <= 10) {
-            firstPaymentMonth = currentMonth + 1;
-            firstPaymentYear = currentYear;
-        } else {
-            firstPaymentMonth = currentMonth + 2;
-            firstPaymentYear = currentYear;
-        }
-        if (firstPaymentMonth > 12) {
-            firstPaymentMonth -= 12;
-            firstPaymentYear += 1;
-        }
-        let repayments = {};
-        let interestAmount = 0;
-        for (let i = 0; i < 12; i++) {
-            let paymentDate = new Date(Date.UTC(firstPaymentYear, firstPaymentMonth - 1, 7));
-            if (i < 11) {
-                let interestEndDate = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 0));
-                let interestDays = Math.ceil((interestEndDate - today) / (1000 * 60 * 60 * 24)) + 1;
-                interestAmount += loanAmount * dailyInterestRate * interestDays;
-                let key = formatDate(paymentDate);
-                repayments[key] = Math.round(interestAmount * 100) / 100;
-                today = new Date(Date.UTC(paymentDate.getUTCFullYear(), paymentDate.getUTCMonth(), 1));
-                interestAmount = 0;
-            } else {
-                let finalPaymentDate = new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day));
-                finalPaymentDate.setUTCFullYear(finalPaymentDate.getUTCFullYear() + 1);
-                if (finalPaymentDate < today) {
-                    finalPaymentDate = new Date(today);
-                }
-                let interestDays = Math.ceil((finalPaymentDate - today) / (1000 * 60 * 60 * 24)) + 1;
-                let finalMonthInterest = loanAmount * dailyInterestRate * interestDays;
-                let key = formatDate(finalPaymentDate);
-                repayments[key] = Math.round((finalMonthInterest + parseFloat(loanAmount)) * 100) / 100;
-            }
-            firstPaymentMonth += 1;
-            if (firstPaymentMonth > 12) {
-                firstPaymentMonth -= 12;
-                firstPaymentYear += 1;
-            }
-        }
-        let totalPayment = Object.values(repayments).reduce((a, b) => a + b, 0);
-        return repayments;
+      function computeRepaymentTimeline(loanAmount, interestRatePerAnnum, startDateStr) {
+          const monthlyInterestRate = interestRatePerAnnum / 12;
+
+          let today = new Date(startDateStr);
+          let currentYear = today.getFullYear();
+          let firstPaymentMonth;
+          let interestYear = today.getFullYear();
+          let previousMonth;
+
+          if (today.getDate() <= 10) {
+              firstPaymentMonth = today.getMonth() + 1;
+          } else {
+              firstPaymentMonth = today.getMonth() + 2;
+          }
+
+          if (firstPaymentMonth > 11) {
+              firstPaymentMonth -= 12;
+              currentYear += 1;
+          }
+
+          const repayments = {};
+
+          for (let i = 0; i < 12; i++) {
+              const paymentDate = new Date(currentYear, firstPaymentMonth, 7);
+              const nextYearAnniversary = new Date(today);
+              nextYearAnniversary.setFullYear(nextYearAnniversary.getFullYear() + 1);
+
+              if (paymentDate > nextYearAnniversary) break;
+
+              previousMonth = firstPaymentMonth - 1;
+              if (previousMonth < 0) {
+                  previousMonth = 11;
+                  interestYear = currentYear - 1;
+              }
+
+              const daysInMonth = (new Date(currentYear, firstPaymentMonth, 0)).getDate();
+              let interestAmount;
+
+              if (i === 0) {
+                  if (today.getDate() <= 10) {
+                      const daysInCurrentMonth = daysInMonth - today.getDate() + 1;
+                      const dailyInterestRate = monthlyInterestRate / daysInMonth;
+                      interestAmount = loanAmount * dailyInterestRate * daysInCurrentMonth;
+                  } else {
+                      const daysInCurrentMonth = daysInMonth - today.getDate() + 1;
+                      const dailyInterestRateCurrentMonth = monthlyInterestRate / daysInMonth;
+                      const interestAmountCurrentMonth = loanAmount * dailyInterestRateCurrentMonth * daysInCurrentMonth;
+
+                      const daysInNextMonth = (new Date(today.getFullYear(), today.getMonth() + 2, 0)).getDate();
+                      const dailyInterestRateNextMonth = monthlyInterestRate / daysInNextMonth;
+                      const interestAmountNextMonth = loanAmount * dailyInterestRateNextMonth * daysInNextMonth;
+
+                      interestAmount = interestAmountCurrentMonth + interestAmountNextMonth;
+                  }
+              } else {
+                  const dailyInterestRate = monthlyInterestRate / daysInMonth;
+                  interestAmount = loanAmount * dailyInterestRate * daysInMonth;
+              }
+
+              const paymentDateStr = paymentDate.toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric'
+              });
+              repayments[paymentDateStr] = Math.round(interestAmount * 100) / 100;
+
+              firstPaymentMonth += 1;
+              if (firstPaymentMonth > 11) {
+                  firstPaymentMonth -= 12;
+                  currentYear += 1;
+              }
+          }
+
+          previousMonth = today.getMonth() - 1;
+          if (previousMonth < 0) {
+              previousMonth = 11;
+              interestYear = today.getFullYear() - 1;
+          }
+          const daysInPreviousMonth = (new Date(interestYear, previousMonth + 1, 0)).getDate();
+          const previousMonthInterest = loanAmount * monthlyInterestRate / daysInPreviousMonth * daysInPreviousMonth;
+
+          const lastInterestDays = today.getDate();
+          const daysInAnniversaryMonth = (new Date(today.getFullYear() + 1, today.getMonth(), 0)).getDate();
+          const lastDailyInterestRate = monthlyInterestRate / daysInAnniversaryMonth;
+          const lastMonthInterest = loanAmount * lastDailyInterestRate * lastInterestDays;
+
+          const anniversaryPaymentDate = new Date(today);
+          anniversaryPaymentDate.setFullYear(anniversaryPaymentDate.getFullYear() + 1);
+          const anniversaryPaymentDateStr = anniversaryPaymentDate.toLocaleDateString('en-US', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+          });
+
+          if (today.getDate() <= 7) {
+              if (repayments[anniversaryPaymentDateStr]) {
+                  repayments[anniversaryPaymentDateStr] += (Math.round(lastMonthInterest * 100) / 100 + Math.round(previousMonthInterest * 100) / 100 + loanAmount);
+              } else {
+                  repayments[anniversaryPaymentDateStr] = (Math.round(lastMonthInterest * 100) / 100 + Math.round(previousMonthInterest * 100) / 100 + loanAmount);
+              }
+          } else {
+              repayments[anniversaryPaymentDateStr] = Math.round(lastMonthInterest * 100) / 100 + loanAmount;
+          }
+
+          return repayments;
       }
 
-      let today = new Date();
-      let startDate = {
-        year: today.getFullYear(),
-        month: today.getMonth() + 1,
-        day: today.getDate()
-      };
+      let startDate = new Date();
 
-      console.log(totalMaxLoanAmount, parseFloat(interestRate), startDate)
-      var repaymentData = computeRepaymentTimeline(totalMaxLoanAmount, parseFloat(interestRate), startDate);
-      console.log(repaymentData)
-    
+      let repaymentData = computeRepaymentTimeline(parseFloat(totalMaxLoanAmount), parseFloat(interestRate), startDate);
+
       var tableDiv = document.createElement('div');
       tableDiv.className = "table-responsive";
       var table = document.createElement('table');
@@ -356,10 +407,10 @@
       var headers = ["Date", "Repayment Amount"];
 
       headers.forEach(function(header) {
-        var th = document.createElement('th');
-        th.className = "text-center";
-        th.textContent = header;
-        tr.appendChild(th);
+          var th = document.createElement('th');
+          th.className = "text-center";
+          th.textContent = header;
+          tr.appendChild(th);
       });
 
       thead.appendChild(tr);
@@ -367,18 +418,17 @@
 
       var tbody = document.createElement('tbody');
       for (var date in repaymentData) {
-        var tr = document.createElement('tr');
-        var dateCell = document.createElement('td');
-        dateCell.className = "text-center";
-        dateCell.textContent = date;
-        tr.appendChild(dateCell);
+          var tr = document.createElement('tr');
+          var dateCell = document.createElement('td');
+          dateCell.className = "text-center";
+          dateCell.textContent = date;
+          tr.appendChild(dateCell);
 
-        var amountCell = document.createElement('td');
-        amountCell.className = "text-center";
-        amountCell.textContent = getFormattedAmount(repaymentData[date]);
-        tr.appendChild(amountCell);
-        
-        tbody.appendChild(tr);
+          var amountCell = document.createElement('td');
+          amountCell.className = "text-center";
+          amountCell.textContent = getFormattedAmount(repaymentData[date]);
+          tr.appendChild(amountCell);
+          tbody.appendChild(tr);
       }
 
       table.appendChild(tbody);
